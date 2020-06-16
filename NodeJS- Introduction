@@ -32,4 +32,15 @@ It can manage the problem of allocating same resouce to multiple threads/ reques
 3.) Prominent users?
 Netflix, LinkedIn, Uber, ebay, PayPal
 
-4.) 
+4.) Features:
+    Async & Event driven
+    All nodejs APIs are non-blocking/ async ie; not waiting for 
+    request -> caller    -----request-------->  recepient
+                         <----response--------  
+                                  /<- callback
+                                  
+    1.) Very fast due to Chrome v8
+    2.) Highly scalable due to even driven even after single threading
+    3.) No buffering, deliver in chucks
+    
+    
