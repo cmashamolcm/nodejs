@@ -1,1 +1,35 @@
+1.) What?
+Open source, cross platform
+Java Script framework for server side web app developement.
+Developed on top of Chrome v8 js engine
+Helps to directly compile JS into machine code
+Its event driven and nonblocking IO to scale
 
+Note:
+server side web app developement:
+ Using scripting languages in server side itself to give customized response for the clients.
+ Eg: Give custom static web pages to a client from server using scripting languages.
+ 
+
+2.) Why?
+Multithreaded applications faces resource conjuction, cost for scaling etc.
+In such case, single threaded application is good, but it have less performance.
+NodeJS is based on even loop, event queues and single thread backed with multiple thread pools to over come such issues.
+
+3.) Multi threaded                                               -     Single threaded
+    1-Multiple requests get blocked by listener cum worker       -     1-Only one thread called event loop to handle multiple requests
+    thread
+    
+    2-Incoming request direct processing model                   -     2-Queuing and processing model
+    
+    3-Many context switching                                     -     3-Not much frequent context switching
+    
+    4-Sync way of doing                                          -     4-Async way of doing (callback etc)
+
+Well suited for distributed systems with huge no: if requests to process
+It can manage the problem of allocating same resouce to multiple threads/ request came in
+
+3.) Prominent users?
+Netflix, LinkedIn, Uber, ebay, PayPal
+
+4.) 
