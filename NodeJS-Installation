@@ -1,0 +1,17 @@
+1.) Download from https://nodejs.org/en/download/
+2.) Install
+3.) Command prompt
+      node -v //-> v12.18.0
+4.) Create a simple .js file -> MyFirstJS.js -> console.log("Hai");
+5.) node MyFirstJS.js will run the script
+6.) To enter into node cmd, 
+          open cmd
+          type node
+          type any js command. Eg: console.log("hello");
+          // will print 
+          hello
+          undefined<in grey color>
+7.) In Windows, Node JS cmd comes with installation. But sometimes shows error 
+800A1391 'console' is undefined
+etc. This is beacause, Windows try to run .js files/ scripts with Microsoft Scripting Engine by default whereas we need to run it via Chrome v8 engine.
+When does node <filename>.js, it enables to run program in v8 engine.
