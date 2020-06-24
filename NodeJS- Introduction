@@ -50,6 +50,16 @@ Netflix, LinkedIn, Uber, ebay, PayPal
     Local - in single .js file
 6.) Callback:
     Can be considered as async equivalent of a funcation. It will get executed after a particular task is complete.
+    Eg: fs.readFile(fname, (err, data)->{});//callback executes after file read
+7.) Events:
+    Node JS is event driven
+    e = require("events"); - import event module
+    emitter = new e.EventEmitter(); - create emitter object
+    emitter.emit('event-name'); - emit event
+    emitter.on('event-name', ()->{}); - register listener and here, callback is event handler
+8.) HTTP:
+    Uses event module.
+    
     
     
     
