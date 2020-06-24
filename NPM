@@ -1,0 +1,5 @@
+Node Package Manager
+npm install -> all modules specified in package.json will be installed
+npm install <module name> -> specific module get installed
+npm intsall <module> -g -> global installation
+npm install <module name> --save -> add package name as dependecy in package.json
