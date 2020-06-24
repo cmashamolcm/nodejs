@@ -42,5 +42,18 @@ Netflix, LinkedIn, Uber, ebay, PayPal
     1.) Very fast due to Chrome v8
     2.) Highly scalable due to even driven even after single threading
     3.) No buffering, deliver in chucks
+5.) Variable Scopes:
+    Global - in all files available
+           - Eg: __dirname, __filename
+           - timer construct - setTimeout(callback, delay) ; setInterval(callback, delay); setImmediate(callback, args)
+    vs 
+    Local - in single .js file
+6.) Callback:
+    Can be considered as async equivalent of a funcation. It will get executed after a particular task is complete.
+    
+    
+    
+    
+    
     
     
