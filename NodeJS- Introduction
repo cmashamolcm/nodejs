@@ -94,10 +94,10 @@ Netflix, LinkedIn, Uber, ebay, PayPal
     Client Sending POST Req:
     ------------------------
     var http = require('http');
-    var options = {"method": "POST", "path" : "http://localhost:2000"};
+    var options = {"method": "POST", "path" : "http://localhost", "post": "2000"};-> posrt need to be specified explicitly 
     http.request(options, (resp)=>{
      resp.on('data', (chunk)=>{
-      console.log(chunk);
+      console.log(chunk.toString());
      });
     }).end();
     
