@@ -101,6 +101,24 @@ Netflix, LinkedIn, Uber, ebay, PayPal
      });
     }).end();
     
+9.) Express:
+    - Application framework, light weight, used for web-app dev
+    - Can imagine as abstraction on top of http
+    - It sets up a routing table internally to dynamically render html pages based on input
+    Routing:
+    Defines end points/ URIs for an application.
+    Routing method:
+    Methods using http verbs that defines the action to be taken in a particular end point
+    
+    const express = require('express');
+    const app = express();//rounte
+    //app.listen(4000);// Server starts in port 4000. If no port mensioned, application terminates, eventhough no error printing.
+    //better way
+    app.listen(4000, ()=>{console.log('started')});-> helful to add a callback at the time of server starting
+    app.get'/getter', (req, resp)=>{//callback funcation similar for all routing methods
+     resp.send('message');//no need of write() then end(). This will handing everything.
+    });
+
     
     
     
