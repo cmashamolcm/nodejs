@@ -62,6 +62,7 @@ Netflix, LinkedIn, Uber, ebay, PayPal
     Creates a node server in specified port.
     Can be server or client
     Server:
+    -------
     var http = require('http');
     http.createServer().listen(1000); -> enough to start a server. But localhost:1000 will just show as loading because the response stream is not closed.
     Then;
@@ -70,6 +71,7 @@ Netflix, LinkedIn, Uber, ebay, PayPal
     http.createServer((req, resp)=>{resp.write("something"); resp.end();}).listen(1000); -> noew works fine.
     
     Client:
+    -------
     const http = require('http');
     http.request("http://localhost:1000", (resp)=>{//resp event
      resp.on('data', (chunk)=>{
@@ -78,6 +80,7 @@ Netflix, LinkedIn, Uber, ebay, PayPal
     }).end(); -> if end() is not given, stream will not be closed and hence no it happens to server at 1000. Even console logging given in server didn't work
     
     Server Side with Http Verbs:
+    ----------------------------
     var http = require('http');
     http.createServer((req, resp)=>{
     if(req.url == '/test' && req.method == 'GET'){
@@ -87,6 +90,16 @@ Netflix, LinkedIn, Uber, ebay, PayPal
     }
     resp.end();
     }).listen(2000);
+    
+    Client Sending POST Req:
+    ------------------------
+    var http = require('http');
+    var options = {"method": "POST", "path" : "http://localhost:2000"};
+    http.request(options, (resp)=>{
+     resp.on('data', (chunk)=>{
+      console.log(chunk);
+     });
+    }).end();
     
     
     
