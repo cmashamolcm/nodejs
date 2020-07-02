@@ -1,0 +1,59 @@
+
+Express:
+    - Application framework, light weight, used for web-app dev
+    - Can imagine as abstraction on top of http
+    - It sets up a routing table internally to dynamically render html pages based on input
+  1.)Routing:
+    Defines end points/ URIs for an application.
+    Routing method:
+    Methods using http verbs that defines the action to be taken in a particular end point
+    
+    const express = require('express');
+    const app = express();//rounte
+    //app.listen(4000);// Server starts in port 4000. If no port mensioned, application terminates, eventhough no error printing.
+    //better way
+    app.listen(4000, ()=>{console.log('started')});-> helful to add a callback at the time of server starting
+    app.listen(4000, ()=>{console.log('started');}).on('error', ()=>{console.log('Failed to start')});-> this will show error message properly on address in use etc.
+    app.get'/getter', (req, resp)=>{//callback funcation similar for all routing methods
+     resp.send('message');//no need of write() then end(). This will handing everything.
+    });
+    
+  2.)Middlewares:
+    Have req, res, next.
+    Instead of using a single callback funcation, express can rounte the req into multiple functions.
+    They are called middlewares.
+    app.get('/test', (req, res, next)=>{
+      console.log('L1');
+      next(); -> This will rediect req and resp to the next funcation, L2.
+    }, (req, res)=>{}console.log('L2');
+    res.send('Done');});-> send is required to close the stream. Else, rotates and time out.
+    If we call next() from L2 without passing next, error comes.
+    app.get('/test', (req, res, next)=>{
+	      console.log('Level 1');
+	      next();
+	      res.send('Done at L1');
+    }, (req, res)=>{
+	      console.log('Level 2');
+	      res.send('Done at L2');
+    });-> prints L1, L2 and returns Done at L2 to front. But error comes at  res.send('Done at L1'); as it tries sending again.
+    If we give send() and then next(); streams closes and returns that send()'s content. But next() call gets exeuted.
+    ie;
+    app.get('/test', (req, res, next)=>{
+	      console.log('Level 1');
+	      next();
+	      res.send('Done at L1');
+    }, (req, res)=>{
+	      console.log('Level 2');
+	      res.send('Done at L2');
+    });-> Here, res.send('Done at L1'); will close the stream and gives back. But next() calls annd prints L2 also. 
+    But in send() of L2, it gives error. Front end all fine. But backend error.
+  3.)Error Hnadling:
+      1.) When url is wrong.
+      Routing table is created based on order in which code for http verbs are written.
+      So, if we add something at the end, just before listen(), it will act as default. So;
+      app.use((req, res, next)=>{res.send('Error')}); will work for 404 errors, 405 etc.
+      2.) When an exception/ error happends inside a route,
+      need to handle that also.
+      app.use((err, req, res, next)){res.send('error')}; -> will work in that case. Give this before app.use((req, res, next)=>{res.send('Error')}); 
+      next(anything); -> will be treated as error and control goes to app.use((err, req, res, next)) if defined.
+    
