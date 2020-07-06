@@ -89,4 +89,17 @@ Express:
       But they cannot exist alone since they don't have listen() capability.
       Route handlers have that capability and handlers can attach multiple routes into it.
       Router() returns Router which will be capable of to create pluggable, modular, ready to mount routes.
+      express() and express.Router() are not the same. First one is app(handler) and second one is mini-app(router)
+      
+ 7.)Middleware Funcations:
+      Funcations with req, resp, next args.
+      Can modify req,res
+      Can end req-res cycle
+      Can call another middleware funcation
+      Can execute any code
+      Route level middleware - inside a route
+      Application level middleware - with app.
+      
+      
+      
       
