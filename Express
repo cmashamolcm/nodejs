@@ -56,4 +56,37 @@ Express:
       need to handle that also.
       app.use((err, req, res, next)){res.send('error')}; -> will work in that case. Give this before app.use((req, res, next)=>{res.send('Error')}); 
       next(anything); -> will be treated as error and control goes to app.use((err, req, res, next)) if defined.
-    
+      
+ 4.)Middlewares can be added as , separated funcations, array of funcations or mix of both.
+      app.get('/test', (req, res, next)=>{console.log('l1'); next();}, (req, res, next)=>{console.log('l1'); next();}, (req, res)=>{console.log('l1');res.send('Done');}); -> prints
+      =
+      const f1 = (req, res, next)=>{console.log('l1'); next();};
+      const f2 = (req, res, next)=>{console.log('l2'); next();};
+      const f3 = (req, res)=>{console.log('l3'); res.send('Done');};
+      app.get('/test', [f1, f2, f3]);
+      =
+      const f1 = (req, res, next)=>{console.log('l1'); next();};
+      const f2 = (req, res, next)=>{console.log('l2'); next();};
+      app.get('/test', [f1, f2], (req, res)=>{console.log('l3'); res.send('Done');});
+ 5.)Stream closing:
+      //res.send('Got & done');
+      //res.end();
+      //res.download();
+      //res.json({"message":"hai"});
+      //res.redirect();
+      //res.sendFile('pakage.json');
+      //res.jsonp("<script>abc</script>"); -> json with padding. used before cors came
+      will be able to close the response stream/ req-res cycle. Else, it will be timed waiting
+ 6.)express.Router() -> called min-app as its giving attachable routes
+      For more modularity
+      Avoids typo and redundancy
+      But app.get(), app.route() etc are called route handlers.route() will not accept url and then thatb route.get() etc will not accept urls. 
+      It accepts only a funcation. ie; app.route('/test').get(()=>{//something});
+      express.Router() is rounter.
+      Router vs Route Handlers:
+      -------------------------
+      Routers gives more modularity.
+      But they cannot exist alone since they don't have listen() capability.
+      Route handlers have that capability and handlers can attach multiple routes into it.
+      Router() returns Router which will be capable of to create pluggable, modular, ready to mount routes.
+      
