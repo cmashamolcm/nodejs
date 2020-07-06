@@ -118,6 +118,21 @@ Netflix, LinkedIn, Uber, ebay, PayPal
     app.get'/getter', (req, resp)=>{//callback funcation similar for all routing methods
      resp.send('message');//no need of write() then end(). This will handing everything.
     });
+10.)module:
+    Logical segragation of code.
+    Each file can be treated as a module.
+    There is an object module which will be having attributes such as fileName, id, exports etc.
+    exports holds all items from a module which are to be exposed to others.
+    So, when we do;
+    module.exports = something;
+    and in some other file, when we do, require('module-file'); actually this exported items will be accessible from there.
+    If we want to expose multiple items from module,
+    module.exports.item1 = item_1;
+    module.exorts.item2 = item_2;
+    can be done.
+    After requiring;
+    const mod = require('module-file');
+    mod.item1 or mod.item2 will allw access.
 
     
     
