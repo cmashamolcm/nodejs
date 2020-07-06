@@ -132,7 +132,15 @@ Netflix, LinkedIn, Uber, ebay, PayPal
     can be done.
     After requiring;
     const mod = require('module-file');
-    mod.item1 or mod.item2 will allw access.
+    mod.item1 or mod.item2 will allow access.
+ 11.)app.use() vs app.all():
+    Both are used to add middlewares to be used across given url patterns. Order of deinition is follwed by order of execution also.
+    use() not uses regx. But all() can use regx.
+    app.use('/abc', func)- means execute func for all urls /abc, /abc/123 etc.
+    app.all('/abc', func)- means only for route /abc. Not for /abc/*.
+    So, app.all('/abc/*') can apply to all routes /abc/xyx, /abc/123 etc but not /abc.
+    app.all() -> to handle all http method calls. app.all('*', fun1, fun2...)
+    app.use() -> to add middlewares as callback to the routes. Only one callback funcation allowed. ap.use('/', callbackFun);
 
     
     
