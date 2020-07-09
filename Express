@@ -119,6 +119,10 @@ Express:
 	but in get(), it gives, /get/lib as get() works that way. So, appending only /get/lib to library/img won't be correct pointer to imange and hence fails.
       	We can use 
 	app.use('/get/lib', express.static('library/img', 'flowers')); -> if we have to fetch images inside library/img/flowers folder. Call /get/lib/lotus.jpg
-	
+      2.)Other middlewares:
+      	a.) error handler
+	b.) morgan -log request, res etc in given format. Eg: app.use(morgan((tokens, req, res)->{return stringToLog})); or existing formats can be used.
+	    Eg: app.use(require('morgan')('tiny')) or app.use(morgan('tiny'))
+	c.) 
       
       
