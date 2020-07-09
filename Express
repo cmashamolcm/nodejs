@@ -97,9 +97,19 @@ Express:
       Can end req-res cycle
       Can call another middleware funcation
       Can execute any code
-      Route level middleware - inside a route
+      Route level middleware - inside a router. So, only in specific route it is applicable.
       Application level middleware - with app.
-      
+      Error Handling Middleware:
+      Will have 4 parameters.
+      app.use((error, req, res, next)=>{
+    	console.error(error.stack);
+    	res.status = 500;
+    	res.send({'message': "Internal error in app"});
+      });
+      -> What will happen if we give next() call inside error handler?
+      		Control will go to the next possible middleware. Eg: if use() or all() is given to be executed after api call
+      There are many built-in middlewares. Previously it was within express. Not those are independent packages except express.static.
+      1.)express.static(route, options);
       
       
       
