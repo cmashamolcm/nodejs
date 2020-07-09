@@ -109,7 +109,14 @@ Express:
       -> What will happen if we give next() call inside error handler?
       		Control will go to the next possible middleware. Eg: if use() or all() is given to be executed after api call
       There are many built-in middlewares. Previously it was within express. Not those are independent packages except express.static.
-      1.)express.static(route, options);
+      1.)express.static(route, options):
+      	To access the static content such as html, css, files etc and return it as an output/ response.
+	app.use(express.static('/get/lib', 'library/img')); -> now when we call /get/lib/sample.png will display the image file if exists. Else if not found, it calls next().
+	If we try,
+	app.get(express.static('/get/lib', 'library/img')); -> will give 404.
+	Reason is;
+	req.path is what is using in express.static. So, in use(), req.path gives "sample.png"
+	but in get(), it gives, /get/lib as get() works that way. So, appending only /get/lib to library/img won't be correct pointer to imange and hence fails.
       
       
       
