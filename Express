@@ -131,6 +131,22 @@ Express:
 	d.) compression - for gzip or deflate compression of response.
 	    app.use(require('compression')()); -> can give options into it as json as well. Eg: app.use(compress({filter: true, threshold: 0
 	    // default 1kb to start compressing}));
+  8.)Template Engines:
+       To use static template files to create html pages and fill variables on the fly.
+       There are many template engines. Eg: pug/ Express Application Generator prior, EJS, Mustache etc.
+       npm install pug --save
+       app.set('views', '../view'); // set folder of jade file. Its views not view.
+       app.set('view engine', 'pug'); // express requires view engine intenally. Just have to set this.
+       app.get('/test', (req, res)=>{res.render('jade-file', {title:'val1', message:'val2'});});
+       Sample jade file jade.pug inside view folder:
+       html
+    	head
+         title= title // no space between title and =. Else it will not come properly.
+    	body
+         h1= message
+       Note: Only app.set() will wor. route.set() gives error as set() is not a funcation. Route handler have set() but rounter don't have set() funcation.
+       
+      
 	    
 	    
 	
