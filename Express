@@ -123,6 +123,16 @@ Express:
       	a.) error handler
 	b.) morgan -log request, res etc in given format. Eg: app.use(morgan((tokens, req, res)->{return stringToLog})); or existing formats can be used.
 	    Eg: app.use(require('morgan')('tiny')) or app.use(morgan('tiny'))
-	c.) 
+	c.) serve-favicon - favicons are small icons on title bar as a brand for website. It can be done by return image using express.static also. 
+	    But advantage of this middleware is performance improvement due to caching in memory than disk read every time. 
+	    Also, it uses ETag(special http header indicating version of a resource) and compatible content-type. Can consider as unique finger print of a website.
+	    It helps in browser caching and update of cache.
+	    app.use(require(favicon)('icon path'));
+	d.) compression - for gzip or deflate compression of response.
+	    app.use(require('compression')()); -> can give options into it as json as well. Eg: app.use(compress({filter: true, threshold: 0
+	    // default 1kb to start compressing}));
+	    
+	    
+	
       
       
