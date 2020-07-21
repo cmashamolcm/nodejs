@@ -6,4 +6,9 @@
     const parser = require('body-parser');
     app.use(parser.json()); - will do the trick.
     app.use(parser.urlencoded({extended: false})); - to accesss data coming along with url. Eg: /hello?name=asha
+    Node:
+    Query param vs Path param:
+    /save?name=asha => query param. req.query.name prints asha.
+    /save/asha => path param. In api definition, need to specify , '/save/:name'. Then req.name wll print asha
     
+        
