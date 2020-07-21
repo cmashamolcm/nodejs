@@ -9,7 +9,11 @@ Note:
 server side web app developement:
  Using scripting languages in server side itself to give customized response for the clients.
  Eg: Give custom static web pages to a client from server using scripting languages.
- 
+Note:
+V8 Engine:
+    Google's open source, high performance, Javascript and Webassembly engine written in C++. Used by chrome, nodejs etc.
+    Implements ECMA Script and WebAssembly standards.
+    Node complies to ECMAScript 262 Spec - standard for scripting languages. Trademark scripting language spec.
 
 2.) Why?
 Multithreaded applications faces resource conjuction, cost for scaling etc.
@@ -94,7 +98,7 @@ Netflix, LinkedIn, Uber, ebay, PayPal
     Client Sending POST Req:
     ------------------------
     var http = require('http');
-    var options = {"method": "POST", "path" : "http://localhost", "post": "2000"};-> posrt need to be specified explicitly 
+    var options = {"method": "POST", "path" : "http://localhost", "post": "2000"};-> post need to be specified explicitly 
     http.request(options, (resp)=>{
      resp.on('data', (chunk)=>{
       console.log(chunk.toString());
@@ -146,6 +150,19 @@ Netflix, LinkedIn, Uber, ebay, PayPal
     If next() call is not done, it won't proceed.
     If req-res cycle not ended, timed waiting comes.
     Now, with >4.x, only /app = /app, /app/* for use() but /app is only /app & /app/* is /app/anything for all(). This is the only difference.
+ 12.)const var1 vs const {var1}:
+    const {var1} is a concept called ES6(EcmaStandard6 = Ecma Script 2015) destructuring assignment
+    Eg:
+    var person = {name: 'asha', mark: 90, pass: true, location: 'Bangalore', country: 'India'};
+    var {name, country} = person;
+    console.log(name + " from " + country);// will print asha from India
+    also
+    var {name: username, country} = person;
+    console.log(username + " from " + country);// will print asha from India. Here assigned to var username.
+    That time if we use name instead of username, error comes at runtime that name is not defined.
+    
+ 13.)
+    
     
     
     
