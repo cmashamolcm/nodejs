@@ -1,0 +1,9 @@
+1.) Parsing input from request body:
+    Use body-parser package.
+    Note: jsonp - json with passing. Earlier it was used for cross domain restrictions. abc.com cannot directly access xyz.com. ow we use cors instead.
+    Earlier, jsonp was used. It have <script> tag and inside that a src arg which have a callback method also. So, when gets invoked, js sends to other domain, 
+    get response and process inside callback method and show the result.
+    const parser = require('body-parser');
+    app.use(parser.json()); - will do the trick.
+    app.use(parser.urlencoded({extended: false})); - to accesss data coming along with url. Eg: /hello?name=asha
+    
