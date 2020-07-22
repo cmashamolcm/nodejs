@@ -11,7 +11,7 @@
     /save?name=asha => query param. req.query.name prints asha.
     /save/asha => path param. In api definition, need to specify , '/save/:name'. Then req.name wll print asha
 2.)Callback vs Promises:
-    Callbacks are the funcations passed as an arg to another funcation.
+    2.1: Callbacks are the funcations passed as an arg to another funcation.
     funcation c(a, b){
         b();// b is callback happens after a call to c() occurs.
     }
@@ -22,7 +22,7 @@
     var d = ()=>{console.log('Inside b');};
     c(10, d); => named callback
     Callbak funcation gets invoked only when the containing funcation is getting invoked. Else, it won't get executed.
-    Callback Hell:
+    2.2: Callback Hell:
     When multiple callbacks are wired up in a hierachical way, the code become so complicated to understand and upgrade. This is called callback hell.
     Eg:
     first(1, (data1, bool)=>{
@@ -70,14 +70,16 @@
     function forth(val, callback){
         callback(val+4, true);
     }
-    Promise:
+    2.3: Promise:
+    Promise and callback can be used interchangeably
+    It's a design pattern.
     I promise that I will do this if this condition is true. Else I won't or will do something else.
     Promises are the funcations giving its word that a value will be returned from it at a later point of time.
     It acts as a proxy for a value that might not get returned 
     due to some error in called fuction which was suppose to respond with a result, which failed to do so.
     
     Promises are used to write neat code when n diferent activities are chained.
-    The primary aim is to difer the execution of a code block until async request is completed and responded back with a result.
+    The primary aim is to differ the execution of a code block until async request is completed and responded back with a result.
     The reason it is needed is because JavaScript is async and not waits till some async call responds to proceed further.
     Eg: wait to do a database operation until db connection established.
     
@@ -88,6 +90,8 @@
     3 stages - pending - created
              - fullfilled - successfully completed operation
              - rejected - operation not completed. Usually error occured. 
+    resolve() and reject() takes only one arg as promise expects to return single return.
+    Inside promise.then(func);-> func also should be of single arg
     
     employee.get('/promise', (req, res)=>{
     promise.then((abc)=>{// promise supports only one parameter in function inside then. More than one will not give error but second pram will be shown undefined
@@ -109,6 +113,30 @@
         reject(new Error('Rejected from promise'));
     }
     });
+    
+    when we do
+    isResolve = true;
+    promise.then((abc, xyz)=>{// xyz have no effect. Promise returns only one value. That will come to abc
+        console.log('Resolve 1 : ' + abc + " : " + xyz );// xyz will be undefined
+    })
+    .catch((a)=>{
+        console.log('Error');
+    });
+    res.end();
+    });
+    var promise = new Promise(function(resolve, reject){
+    if(isResolve){
+        console.log('Inside Resolve');
+        resolve(2, 3);// no point in giving 2 args. It will take only first one.
+    }else{
+        console.log('Inside Reject');
+        reject(new Error('Rejected from promise'));
+    }
+    });
+    2.4: Promise chaining:
+    promise.then().then().then()...;
+    excution comes out from one then and reaches to next then only after return statement executed from first then's callback method.
+    So, if lot of time taking operations are there in first then, next then will wait till it receives the result from first then.
     
     
         
