@@ -136,7 +136,34 @@
     2.4: Promise chaining:
     promise.then().then().then()...;
     excution comes out from one then and reaches to next then only after return statement executed from first then's callback method.
-    So, if lot of time taking operations are there in first then, next then will wait till it receives the result from first then.
+    So, if lot of time taking operations are there in first then(), next then will wait till it receives the result from first then().
     
+    var promise = new Promise((resolve, reject)=>{
+        delay();// delay be an operation taking 5000ms
+        resolve({
+            name: 'asha',
+            id: 1,
+            place: `India`
+        });
+    });
+    console.log(typeof promise);// object
+    var data = promise.then((result)=>{
+        console.log('account opening - prev status: ' + JSON.stringify(result));
+        setTimeout(()=>result.status = 'account opened', 3000);//-> this won't affect the normal flow. This triggers a new async call and goes. But sequencial flow goes to next statement. So changes from this timeout callback may not be visible in promise flow. 
+        return result;
+    }).then((result)=>{
+        console.log('debit enabled - prev status: ' + JSON.stringify(result));
+        result.status = 'debit enabled';
+        return result;
+    }).then((result)=>{
+        console.log('account closed - prev status: ' + JSON.stringify(result));
+        result.status = 'account closed';
+        return result;
+    });
+    console.log('Final data - ' + data);// this gets printed irrspective of the time delays inside promise then(). In case of callbacks, it will wait till comes out from callback hell.
+                                        // This shows that execution of code parts like line just above are not getting delayed or blocked due to use of promise. But in callback, it delays.    
+    data.then((result)=>{
+        console.log('final then ' + JSON.stringify(result));
+    });// this then() will get executed once the return from previous then() is received.
+    This kind of flexibility of adding new callbacks at any point in code is advantage of promise. But for callback hell, it have to change within that clumsy code to add new callback.
     
-        
