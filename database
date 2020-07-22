@@ -1,4 +1,4 @@
-1.) Parsing input from request body:
+1.)Parsing input from request body:
     Use body-parser package.
     Note: jsonp - json with passing. Earlier it was used for cross domain restrictions. abc.com cannot directly access xyz.com. ow we use cors instead.
     Earlier, jsonp was used. It have <script> tag and inside that a src arg which have a callback method also. So, when gets invoked, js sends to other domain, 
@@ -10,5 +10,105 @@
     Query param vs Path param:
     /save?name=asha => query param. req.query.name prints asha.
     /save/asha => path param. In api definition, need to specify , '/save/:name'. Then req.name wll print asha
+2.)Callback vs Promises:
+    Callbacks are the funcations passed as an arg to another funcation.
+    funcation c(a, b){
+        b();// b is callback happens after a call to c() occurs.
+    }
+    It can be invoked as c(10, ()=>{console.log('Inside b');});
+    It gets executed after a particular event occurs.
+    Callback funcations can be anonymous or named.
+    c(10, ()=>{console.log('Inside b');}); -> anonymous
+    var d = ()=>{console.log('Inside b');};
+    c(10, d); => named callback
+    Callbak funcation gets invoked only when the containing funcation is getting invoked. Else, it won't get executed.
+    Callback Hell:
+    When multiple callbacks are wired up in a hierachical way, the code become so complicated to understand and upgrade. This is called callback hell.
+    Eg:
+    first(1, (data1, bool)=>{
+        if(bool){
+            setTimeout(()=>console.log('first callback ' + data1), 3000);
+            second(data1, (data2, bool)=>{
+                if(bool){
+                    console.log('second callback ' + data2);
+                    third(data2, (data3, bool)=>{
+                        if(bool){
+                            console.log('third callback ' + data3);
+                            forth(data3, (data4, bool)=>{
+                                if(bool){
+                                    console.log('forth callback ' + data4);
+                                    console.log('The END');
+                                }
+                            });
+                        }else{
+                            console.log('Error in third');
+                        }
+                    });
+                }else{
+                    console.log('Error in second');
+                }
+                
+            });
+        }else{
+            console.log('Error in first');
+        }
+
+    });
+    
+    function first(val, callback){
+        callback(val+1, true);
+    }
+
+    function second(val, callback){
+        callback(val+2, true);
+    }
+
+    function third(val, callback){
+        callback(val+3, true);
+    }
+
+    function forth(val, callback){
+        callback(val+4, true);
+    }
+    Promise:
+    I promise that I will do this if this condition is true. Else I won't or will do something else.
+    Promises are the funcations giving its word that a value will be returned from it at a later point of time.
+    It acts as a proxy for a value that might not get returned 
+    due to some error in called fuction which was suppose to respond with a result, which failed to do so.
+    
+    Promises are used to write neat code when n diferent activities are chained.
+    The primary aim is to difer the execution of a code block until async request is completed and responded back with a result.
+    The reason it is needed is because JavaScript is async and not waits till some async call responds to proceed further.
+    Eg: wait to do a database operation until db connection established.
+    
+    promise constructor accepts a callback function(can be regular funcation, arrow funcation) with 2 funcations as args - 1.resolve, 2.reject
+    callback inside a promise constructor = executor.
+    Executor runs immediately after promise is getting created.
+    That's why console.log() inside promise executes before invoke.
+    3 stages - pending - created
+             - fullfilled - successfully completed operation
+             - rejected - operation not completed. Usually error occured. 
+    
+    employee.get('/promise', (req, res)=>{
+    promise.then((abc)=>{// promise supports only one parameter in function inside then. More than one will not give error but second pram will be shown undefined
+        console.log('Resolve 1 : ' + abc );// prints 2
+    })
+    .catch((a)=>{
+        console.log('Error');
+    });
+    res.end();
+    });
+    var isResolve = true;
+    var promise = new Promise(function(resolve, reject){
+    if(isResolve){
+        console.log('Inside Resolve');// this won't get printed when we invoke promise. But will get printed in the first time(at save time). 
+        //The reason is 
+        resolve(2);
+    }else{
+        console.log('Inside Reject');
+        reject(new Error('Rejected from promise'));
+    }
+    });
+    
     
         
