@@ -167,3 +167,15 @@
     });// this then() will get executed once the return from previous then() is received.
     This kind of flexibility of adding new callbacks at any point in code is advantage of promise. But for callback hell, it have to change within that clumsy code to add new callback.
     
+                                            differed object
+                                              ____|     |
+                                              /      _______
+                                             /      /       \
+                                            /   resolve   reject when error comes    
+                                           /
+                                         promise object(status - pending, fullfilled, rejected)
+                                                |
+                                               / \
+                                            then  catch when error comes
+    The method we give inside then() is treated as resolve() and those given inside catch() will be treated as reject().
+                                            
