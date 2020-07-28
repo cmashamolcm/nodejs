@@ -1,0 +1,25 @@
+1.) Winston logging package is to log details into console, file, socket etc.
+2.) npm install winston --save
+3.) const winston = require('winston');
+    const console = new winston.transports.Console({
+                  level: 'info'
+                });
+    const dateFormat = ()=>{
+      return new Date(Date.now().toString());
+    }
+    const file = new winston.transports.File({
+                    level: 'error',// high priority than of logger level for transport level.
+                    filename: 'app.log',
+                    dirname:'.',
+                    format: winston.format.printf(
+                    return `${dateFormat()} | ${info.level.toUpperCase()} | 'app.log' | ${info.message} | `
+        message = info.obj ? message + `data:${JSON.stringify(info.obj)} | ` : message
+        message = this.log_data ? message + `log_data:${JSON.stringify(this.log_data)} | ` : message);
+                  });
+    const options = {
+                      transports: [console, file],
+                      level: 'debug'// only small letters. Top level. Applys to all transports. But each of the transport can override this in it's option.
+                    }
+     const logger = new winston.createLogger(options);
+     logger.info('Test info');
+     logger.log('error', 'Test error');
