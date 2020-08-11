@@ -23,3 +23,23 @@
      const logger = new winston.createLogger(options);
      logger.info('Test info');
      logger.log('error', 'Test error');
+4.) ErrorHandler package is to provide a more sophisticated stack trace. It can be used as a middleware which can respond with a formatted stack trace.
+    Eg:
+    For an express app;
+    If we have a url as below;
+    app.get('/exception', (req, res)=>{
+        throw Error('Exception testing');
+    });
+    While accessing http://localhost:1000/exception, we will get
+    Error: Exception testing
+    at /Users/abc/WorkSpace/Learning/company-portal-node/api/index.js:24:11
+    at Layer.handle [as handle_request] (/Users/abc/WorkSpace/Learning/company
+    which is provided by express itself with a default handler.
+    But if we add;
+    npm install --save errorhandler
+    const errorHandler = require('errorhandler');
+    app.use(errorHandler(/*{dumpExceptions: true, showStack: true }*/));
+    It will give a properly formatted stack trace including error code as shown below.
+    Connect
+    500 Error: Exception testing
+           at /Users/abc/WorkSpace/Learning/company-portal-node/api/index.js:24:11
