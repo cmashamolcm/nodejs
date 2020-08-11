@@ -81,7 +81,8 @@ Netflix, LinkedIn, Uber, ebay, PayPal
      resp.on('data', (chunk)=>{
       console.log(chunk.toString()); -> if not given toString(), will print byte array ie; buffer
      });
-    }).end(); -> if end() is not given, stream will not be closed and hence no it happens to server at 1000. Even console logging given in server didn't work
+    }).end(); -> if end() is not given, stream will not be closed and hence nothing happens to server at 1000. 
+    Even console logging given in server didn't work
     
     Server Side with Http Verbs:
     ----------------------------
