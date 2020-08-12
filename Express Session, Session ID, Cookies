@@ -1,0 +1,27 @@
+1.) Session ID: (Relate it as a membdership id in an organization)
+    A unique id defined from the web server in return of successful authentication of user credentials.
+    Session ID will be specific to the website and can be decoded only by that web server. They are randomly generated over a time period.
+2.) Cookie: (Relate it as the physical ID Card whic holds membership id.)
+    Session ID is stored within a wrapper called cookie which can hold additional information as well. This will be send to client
+    browser and browser can store the cookies to reuse it when further communication happens with the web server instead of authenticate
+    by user credentials every time.
+3.) cookie based authentication:
+    Validation of cookies from client at server side to enable authorized access is called cookie based authentication.
+    Login requests creates session id and returns cookie to client from server side.
+    Logout removes the session ID from database as well as cookie from server side. 
+    As a response to logout call, server asks browser/ client to clear the cookies from local cache/ file system as well as part of complete logout.
+    Cookies are not much trust worthy.
+4.) Token based Authentication:
+    Using OAuth, JWT etc.
+    It is go grant access to a subset of resources/ data. Not for the entire data.
+    Eg: For one time payment of bill via net banking, token can be used. But it won't grant permission to access full bank account details.
+    Advantage is we can invalidate the token and revoke the access anytime.
+    Token have an expiry and it gets refreshed on expiry, if we still use the valid token.
+    Token can hold permissions/ grants, session information etc. Eg: JWT token can have session info as well.
+5.) Usecase for Token vs Cookies:
+    Cookies use with browsers as its handled as special entities in response header in browser.
+    Tokens are best to use if apps are used to interact with web server as it don't have any special treatment capabilities for cookies.
+    
+    
+    
+    
