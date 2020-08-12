@@ -43,3 +43,33 @@
     Connect
     500 Error: Exception testing
            at /Users/abc/WorkSpace/Learning/company-portal-node/api/index.js:24:11
+5.) Error-Hnadler package is used with http for server side error management. It can be considered as the ancestor of these errorhandler middleware.
+    npm install --save error-handler
+    Then;
+    const http = require('http');
+    const error_handler = require('error-handler');
+    http.createServer((req, res)=>{
+        error_handler(req, res, callback);
+        throw new Error('Error occured...@ server');
+    }).listen(2000);
+    callback = (req, res)=>{
+        res.writeHead(502, {'Content-Type': 'text/html'});
+        res.end(
+        '<html>' +
+          '<head><title>Error</title></head>' +
+          '<body><p style="white-space: pre">' + 'Hello error ' + '</p></body>' +
+        '</html>'
+      )
+    }
+    
+    This will respond to the call, http://localhost:2000
+    Erro code will come as 502 since mentioned in response head
+    <html>
+        <head>
+	        <title>Error</title>
+        </head>
+        <body>
+	        <p style="white-space: pre">Hello error </p>
+        </body>
+    </html>
+    
