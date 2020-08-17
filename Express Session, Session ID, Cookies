@@ -45,7 +45,7 @@
     }
     });
 
-    session_route.get('/act', (req, res, next)=>{
+    session_route.get('/act', (req, res, next)=>{// uses the session created in login time.
     console.log(req.session);// prints Session object as: { cookie: {path: '/', _expires: null, originalMaxAge: null, httpOnly: true, secure: false}}
     if(req.session.data == 'unique_id_admin'){ // allowes only if session have the data value
         res.end('validated session - so user activity allowed');
@@ -55,7 +55,7 @@
     }
     });
 
-    session_route.get('/logout', (req, res, next)=>{
+    session_route.get('/logout', (req, res, next)=>{// destroy the session. It clears the session and afterwards, if we try /act, 401 error comes.
     console.log(req.session);
     req.session.destroy((err)=>{
         console.log('An error cooured while clearing the session');
