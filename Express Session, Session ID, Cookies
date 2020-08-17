@@ -21,6 +21,47 @@
 5.) Usecase for Token vs Cookies:
     Cookies use with browsers as its handled as special entities in response header in browser.
     Tokens are best to use if apps are used to interact with web server as it don't have any special treatment capabilities for cookies.
+6.) Express-Session middleware:
+    Till 3.x, it was part of express. Now its an independent module.
+    npm install --save express-session
+    
+    const express = require('express');
+    const session = require('express-session');
+
+    const session_route = express.Router('/');
+    module.exports = session_route;
+    session_route.use(session({secret: 'shhhhhh', saveUninitialized: false, resave: true, cookie: {secure: false, data:'abc'}}));
+    // if secure == true, only https will enable cookies. For http calls, it won't be enables.
+    //Set-Cookie: connect.sid=s%3AxiASMrLoHfOaaBEWM4bXGbgpxxxiqXEBcSy.fY%2FdSuPAdoqfZLGwMxHfUhCrDoDM3tyiY5ccx9EV2e7dEc; Path=/; HttpOnly will not be visible in that case
+    // added the session to express route in above line
+    session_route.get('/login/:uid', (req, res, next)=>{
+    console.log(req.params);
+    var sessionJson = req.session;// the session object from request is used here
+    if(req.params.uid == '123'){
+        sessionJson.data = 'unique_id_admin';// added a key value; {data: 'unique_is_admin'} into session object
+        res.end('validated session');
+    }else{
+        next(new Error('Unauthorised user'));
+    }
+    });
+
+    session_route.get('/act', (req, res, next)=>{
+    console.log(req.session);// prints Session object as: { cookie: {path: '/', _expires: null, originalMaxAge: null, httpOnly: true, secure: false}}
+    if(req.session.data == 'unique_id_admin'){ // allowes only if session have the data value
+        res.end('validated session - so user activity allowed');
+    }else{
+        res.status(401);
+        throw new Error('Unauthorised user - no activity allowed');
+    }
+    });
+
+    session_route.get('/logout', (req, res, next)=>{
+    console.log(req.session);
+    req.session.destroy((err)=>{
+        console.log('An error cooured while clearing the session');
+    });
+    res.end('destroyed session to logout');
+    });
     
     
     
