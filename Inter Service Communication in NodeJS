@@ -1,0 +1,27 @@
+1.) Calling one API from another API:
+    1.) Better make the function a common one and use it in both the APIs if both APIs are in same service.
+    2.) If calling API from another API is mandatory or is the only solution, then;
+    3.) http module:
+        const http = require('http');
+        session_route.get('/service', (req, res)=>{
+        var data = 'old';
+        console.log('@service');
+        http.request('http://localhost:1000/session/test', (res1)=>{
+          console.log('Got response');
+          res1.on('data', (chunk)=>{
+            data += chunk;
+            console.log(data);
+          });
+          res1.on('error', (err)=>{
+            console.log('Error');
+          });
+          res1.on('end', ()=>{
+            console.log('Ending');
+            res.end(data); // this is how on end of request response of other api, we can append the result into actual API which triggered the second API call.
+          });// if we give res.end(data); outside 'end' event 
+          //or along with .end() call below, the response from second API will not get reflected due to asyc way of node.
+      }).end();// to close the stream. Else, request won't get closed and will get times out after a while.
+    4.) Use request module:
+        npm install --save request
+        Its depricating soon.
+        
