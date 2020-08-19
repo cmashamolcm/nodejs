@@ -145,7 +145,13 @@ Express:
     	body
          h1= message
        Note: Only app.set() will wor. route.set() gives error as set() is not a funcation. Route handler have set() but rounter don't have set() funcation.
-       
+  9.)Body Parser middleware:
+  	To parse request body.
+	Usually with req.params.abc when we pass data as /url/:abc
+	When we pass as query params; ie; key-value, /url with abc = 'test' from postan, use req.query.abc
+	In case of POST, PUT etc, baody will be there which can hold, plain text, json, url encoded etc. To parse that is what the purpose of body-parser.
+	
+  	
       
 	    
 	    
