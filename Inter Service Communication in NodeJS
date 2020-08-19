@@ -24,4 +24,10 @@
     4.) Use request module:
         npm install --save request
         Its depricating soon.
+        request('http://localhost:1000/session/test', (err, resp, body)=>{
+        console.log('Remote answer : ' + body);
+        data = data + body;
+        res.end(data); // will return data + response from inter service call back to the caller.
+        });
+        //res.end(data);// here if we give res.eend(data), it will return data without body content.
         
