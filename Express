@@ -150,8 +150,38 @@ Express:
 	Usually with req.params.abc when we pass data as /url/:abc
 	When we pass as query params; ie; key-value, /url with abc = 'test' from postan, use req.query.abc
 	In case of POST, PUT etc, baody will be there which can hold, plain text, json, url encoded etc. To parse that is what the purpose of body-parser.
+	When we try to access req.body without parser, it will print undefined.
+	The reason is, req will be sending as chunks of data and hence heed to get aggregated if we want to print.
+	So,
+	parser_controller.post('/post', (req, res)=>{
+    		console.log(req.body);// will print undefined as it is not aggreated the chunks.
+    		res.send(req.body);// returns blank as req.body is not aggregated.
+	});
+	But,
+	If we try;
+	parser_controller.post('/post', (req, res)=>{
+    		var data = '';
+    		req.on('data', (chunk)=>{
+        		console.log(req);
+        		data += chunk;
+    		});
+    		req.on('end', ()=>{
+        		res.send(data);
+    		});
+	});
+	This will work and return proper value. Eg: Returns {"key1":"value1"} if my req body contained this same value.
 	
-  	
+	This same thing can be easily achieved with lesser code as below.
+	const parser = require('body-parser');
+	parser_controller.use(parser.json());
+	parser_controller.post('/jpost', (req, res)=>{
+    		console.log(req.body);
+    		res.send(req.body);
+	});
+	
+	Body JSON Parser:
+	It identifies the req content-type and if it is json or application/json,
+	parses the content of req.body and assign it back to req.body itself. This makes req.body a json object for further processing.
       
 	    
 	    
