@@ -149,7 +149,7 @@ Express:
   	To parse request body.
 	Usually with req.params.abc when we pass data as /url/:abc
 	When we pass as query params; ie; key-value, /url with abc = 'test' from postan, use req.query.abc
-	In case of POST, PUT etc, baody will be there which can hold, plain text, json, url encoded etc. To parse that is what the purpose of body-parser.
+	In case of POST, PUT etc, body will be there which can hold, plain text, json, url encoded etc. To parse that is what the purpose of body-parser.
 	When we try to access req.body without parser, it will print undefined.
 	The reason is, req will be sending as chunks of data and hence heed to get aggregated if we want to print.
 	So,
@@ -182,7 +182,44 @@ Express:
 	Body JSON Parser:
 	It identifies the req content-type and if it is json or application/json,
 	parses the content of req.body and assign it back to req.body itself. This makes req.body a json object for further processing.
-      
+	This can process/inflate gzip/deflate body.
+	
+      	parser.urlencoded():
+	To parse request bdy with content type application/x-www-form-urlencoded or */x-www-form-urlencoded.
+	form-urlencoded is used to send data in the form of form data. form-urlencoded 
+	as well as multipart/formdata MIME types serves the purpose of sending HTML form data.
+	url encoded form send form data as a full length query string appended in body of request. When we use query param appended to url, 
+	that is also url encoded form but not in body of request.
+	
+	if we try;
+	POST: http://localhost:1000/bodyparser/urlblank?key1=value1
+	with body content-type: application/x-www-form-urlencoded, and data set in body as key2: value2;
+	parser_controller.use(parser.urlencoded({extended: true}));
+	parser_controller.post('/urlblank', (req, res)=>{
+    		console.log(req.body);//prints { key2: 'value2' }
+    		console.log(req.query);// prints { key1: 'value1' }
+    		console.log(req.params);// prints {}
+    		res.send(req.body);// returns {"key2": "value2"}
+	});
+	If we comment parser_controller.use(parser.urlencoded({extended: true}));
+	Then;
+	console.log(req.body);// undefined as no chunks aggragated
+	onsole.log(req.query);// prints { key1: 'value1' }
+	console.log(req.params);// prints {}
+	res.send(req.body);// returns blank
+	
+	MIME Type: 
+	Media type. Header in http request to identify the type of data contained in it. 
+	Can related it as similar to file extensions to recognize type file it holds. Eg: .txt holds text file. 
+	Same way, text/html indicates it as plain html file.
+	Form URL Encoded is one of such mime types.
+	Its same way as query param.
+	/test/key1=abc&key2=xyz abc
+	which will form a key value as key1 = "abc" and key2 = "xyz abc". space etc will be replaced by %20 
+	and any other non-alpha-numberic characters replaced with %HH<hex of ascii of that special character>.
+	Ie;
+	ultimately, urlencoded parser is to parse the request body with content type url-encoded-formdata which
+	it converts to key value pair and reassign to req.body.
 	    
 	    
 	
