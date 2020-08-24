@@ -1,1 +1,23 @@
 1.) Database Intgeration Packages:
+    To connect to any type of database, there are a set of drivers provided.
+    Eg:
+    With Cassandra;
+    npm install --save cassandra-driver
+    Then;
+    const driver = require('cassandra-driver');
+    const client = new driver.Client({contactPoints: ['localhost'], 
+                                      keyspace: 'test',
+                                      localDataCenter: 'datacenter1'});
+    const listEmployees = (res)=>{
+    var rows = 0;
+    client.execute('select * from test.employee').then((resultSet)=>{
+        console.log(resultSet.rowLength);
+        rows = resultSet.rowLength;
+        res.end("Count = " + rows);
+      }).catch((err)=>{
+        console.log('Error on listing from database' + err);
+      });
+    }
+    Now, from api, call listEployees(res);
+    This will return the count(employee) in table employee.
+  
