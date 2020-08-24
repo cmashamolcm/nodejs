@@ -220,6 +220,16 @@ Express:
 	Ie;
 	ultimately, urlencoded parser is to parse the request body with content type url-encoded-formdata which
 	it converts to key value pair and reassign to req.body.
+	
+	 x-www-form-urlencoded vs multipart/form-data:
+	 Both are for sending html form data to the server side.
+	 Both transmit data as key-value pair.
+	 urlencoded is mainly for text data whereas form-data is for binary data or file transfters.
+	 urlencoded send data as a single query string separated by special characters with %.
+	 Multipart form data transfer data by separating it using a character which is not part of that actual data. 
+	 Eg: use base64 to encode data and use non-base64 to split the data.
+	 Both are used for POST or a verb with body.
+	 form-data is much efficient for there is no need of replacing one char with 3 bytes as in case of url-encoded.
 	    
 	    
 	
