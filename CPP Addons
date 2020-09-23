@@ -1,0 +1,30 @@
+1.)Addons are native libraries that can be added as node module even though it is developed in other languages.
+   Eg: cpp libraries can be used direclty in node project as an addon with the help of special compilers and node packages.
+2.)Modules used to achive the same are
+    - node-gyp => npm install --save-dev node-gyp.  => dev dependency => This is to build the cpp source and convert to node module
+    - napi     => npm install --save node-addon-api => dependency => Called N-API. 
+                  To build native addons from c/c++ source code which can be independent of the underlying JS engine such as V8 etc.
+                  Napi methods and datatypes are used in cpp source code to create a wrapper for the actual cpp code 
+                  so that even if the underlying cpp library changes, it will impact less to the node part.
+3.)Configuration file used: binding.gyp
+   Command to:
+   clean cpp src code: node-gyp clean
+   build cpp src code: node-gyp rebuild
+   Note: add both these as script in package.json and use npm run build/ clean
+4.)Sample binding.gyp:
+   {
+    "targets": [{
+        "target_name": "test_addon", => It is mandatory to give target name. Else error comes on build
+        "sources": [
+            "cpp-src/main.cpp",
+            "cpp-src/sample.cpp"
+        ],
+        'defines': ['NAPI_DISABLE_CPP_EXCEPTIONS'] => 
+    }]
+   }
+5.)What is .gyp?
+   Gyp is a documentation standard came along with Google chromium project which is the browser project on top of which
+   chrome is built and anybody can build their own custom browsers.
+   
+   It's a cross platform build representation.
+   It helps to generate visual studio/ xcode/ scons or makefiles from build target file written in .gyp file
