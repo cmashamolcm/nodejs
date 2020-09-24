@@ -19,7 +19,15 @@
             "cpp-src/main.cpp",
             "cpp-src/sample.cpp"
         ],
-        'defines': ['NAPI_DISABLE_CPP_EXCEPTIONS'] => 
+        'include_dirs':[ => A list of include directories to be passed on the command line to the C/C++ compiler (via -I or /I options).
+            "<!@(node -p \"require('node-addon-api').include\")"
+        ],
+        'libraries': [],=> A list of list of libraries (and/or frameworks) on which this target depends.
+        'dependencies': [=> A list of targets on which this target depends. 
+        Targets in other .gyp files are specified as ../path/to/other.gyp:target_we_want.
+            "<!@(node -p \"require('node-addon-api').gyp\")"
+        ],
+        'defines': ['NAPI_DISABLE_CPP_EXCEPTIONS'] => commands to cpp compiler
     }]
    }
 5.)What is .gyp?
@@ -32,3 +40,6 @@
    Mostly follow JSON format. # is comment.
    Keywords:
    'defines': A list of preprocesor definitions to be passed on the command line to the C/C++ compiler (via -D or /D options).
+   'libraries': List of libs to use in cpp
+   'dependencies': list of other target names on this or other gyp files on which this target building depends on
+   
