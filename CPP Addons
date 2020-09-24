@@ -28,3 +28,7 @@
    
    It's a cross platform build representation.
    It helps to generate visual studio/ xcode/ scons or makefiles from build target file written in .gyp file
+   Syntax match wih Python script.
+   Mostly follow JSON format. # is comment.
+   Keywords:
+   'defines': A list of preprocesor definitions to be passed on the command line to the C/C++ compiler (via -D or /D options).
