@@ -43,4 +43,5 @@
    'libraries': List of libs to use in cpp
    'dependencies': list of other target names on this or other gyp files on which this target building depends on
 6.)binding.gyp kept in same hierarchy as of package.json can be used to build the cpp part into node addon using node-gyp rebuild
+   
 
