@@ -43,5 +43,27 @@
    'libraries': List of libs to use in cpp
    'dependencies': list of other target names on this or other gyp files on which this target building depends on
 6.)binding.gyp kept in same hierarchy as of package.json can be used to build the cpp part into node addon using node-gyp rebuild
+   It will create build->Release->test_cpp_addon.node and obj.target etc. The name "test_cpp_addon".node comes from target name.
+   If we give special characters such as test-cpp-addon instead of underscore or valid characters, build will show error.
+7.)Once build is done, this .node module which holds cpp equivalent code build independent of node version with the help of napi, can be used in .js files
+   as require('./build/Release/<targetname>.node') and use methods from it.
+8.)How is cpp node binding done?
+   cpp code will be there in path specified as source in binding.gyp file.
+   For a single cpp file, there will be a wrapper as well. There will be a common main class too.
    
-
+   main.cpp:
+   ---------
+   #include <napi.h>
+   #include "sample.h"
+   Napi::Object InitAll(Napi::Env env, Napi::Object exports){
+      return sample::Init(env, exports);
+   }
+   NODE_API_MODULE(test_cpp_addon, InitAll);
+   
+   API: Sample.h:
+   --------------
+   #include <napi.h>
+   namespace sample{
+      int add(int a, int b);
+      Napi::Number addWrap(const Napi::CallbackInfo& );
+   }
